@@ -9,7 +9,7 @@
 import Firebase
 
 class GameRoom {
-    static let maxPlayers = 8
+    static let maxPlayers = 6
     static let minStartablePlayers = 1 // for testing, change to 3 for game
 
     weak var delegate: GameRoomDelegate?

@@ -22,6 +22,11 @@ class HomeViewController: UIViewController {
         Authentication.delegate = self
     }
 
+    /// Hides the status bar at the top
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     func initializeElements() {
         background.image = Constants.mainMenuBackground
         background.alpha = Constants.backgroundAlpha

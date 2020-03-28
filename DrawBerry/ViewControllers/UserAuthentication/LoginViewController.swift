@@ -18,8 +18,12 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initializeElements()
+    }
+
+    /// Hides the status bar at the top
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
 
     override func viewDidAppear(_ animated: Bool) {
