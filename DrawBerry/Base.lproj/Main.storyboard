@@ -69,7 +69,7 @@
                                             <segue destination="BYZ-38-t0r" kind="presentation" id="ruz-Fj-dc2"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Et-fA-MqW">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Et-fA-MqW">
                                         <rect key="frame" x="0.0" y="367" width="400" height="150"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="150" id="aD6-Yw-OXi"/>
@@ -172,7 +172,7 @@
                                             <action selector="handleSignUpButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s0e-J9-ht1"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26k-YA-Elm">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26k-YA-Elm">
                                         <rect key="frame" x="0.0" y="450" width="400" height="130"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -351,8 +351,8 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YId-qh-Bbe">
-                                <rect key="frame" x="0.0" y="100" width="834" height="1074"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YId-qh-Bbe">
+                                <rect key="frame" x="0.0" y="50" width="834" height="1124"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7Eb-uc-VlG">
                                     <size key="itemSize" width="391" height="344"/>
@@ -374,15 +374,20 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fSg-DR-QOc">
                                                     <rect key="frame" x="0.0" y="294" width="391" height="50"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YAn-Dq-aTO">
-                                                            <rect key="frame" x="174" y="15" width="42" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YAn-Dq-aTO">
+                                                            <rect key="frame" x="0.0" y="0.0" width="391" height="50"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="YAn-Dq-aTO" secondAttribute="trailing" id="8QK-gU-lIo"/>
+                                                        <constraint firstItem="YAn-Dq-aTO" firstAttribute="top" secondItem="fSg-DR-QOc" secondAttribute="top" id="c4k-SJ-hOL"/>
+                                                        <constraint firstAttribute="bottom" secondItem="YAn-Dq-aTO" secondAttribute="bottom" id="eac-YK-N9a"/>
+                                                        <constraint firstItem="YAn-Dq-aTO" firstAttribute="leading" secondItem="fSg-DR-QOc" secondAttribute="leading" id="uCv-co-XMd"/>
+                                                    </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
@@ -406,8 +411,9 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="YId-qh-Bbe" firstAttribute="top" secondItem="1kv-Vt-qgr" secondAttribute="bottom" constant="50" id="ETM-4D-MQ9"/>
+                            <constraint firstItem="YId-qh-Bbe" firstAttribute="top" secondItem="1kv-Vt-qgr" secondAttribute="bottom" id="ETM-4D-MQ9"/>
                             <constraint firstItem="YId-qh-Bbe" firstAttribute="bottom" secondItem="R4z-ns-TkY" secondAttribute="bottom" id="Nz0-s6-sYQ"/>
                             <constraint firstItem="YId-qh-Bbe" firstAttribute="trailing" secondItem="R4z-ns-TkY" secondAttribute="trailing" id="RW6-ZX-ST0"/>
                             <constraint firstItem="YId-qh-Bbe" firstAttribute="leading" secondItem="R4z-ns-TkY" secondAttribute="leading" id="Wii-be-COv"/>
@@ -416,6 +422,9 @@
                             <constraint firstItem="R4z-ns-TkY" firstAttribute="trailing" secondItem="1kv-Vt-qgr" secondAttribute="trailing" id="zeF-LJ-zMo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="R4z-ns-TkY"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="wPn-Kp-fdP" appends="YES" id="91B-M3-5eJ"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="A3K-k2-ONo"/>
                     <connections>
@@ -424,6 +433,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yxX-MX-JnZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="wPn-Kp-fdP">
+                    <connections>
+                        <action selector="handleSingleTap:" destination="cuu-G9-htT" id="6tS-16-fGq"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2448.201438848921" y="32.663316582914575"/>
         </scene>

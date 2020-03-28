@@ -36,6 +36,10 @@ class RoomNetworkAdapter {
         })
     }
 
+    func getUsername(from uid: String) -> String {
+        return db.child("users").child(uid).child("username").description()
+    }
+
     func checkRoomEnterable(roomCode: String, completionHandler: @escaping (GameRoomStatus) -> Void) {
         db.child("activeRooms").child(roomCode)
             .observeSingleEvent(of: .value, with: { snapshot in
@@ -92,6 +96,7 @@ class RoomNetworkAdapter {
                 let players = playersValue.map { playerUID, properties in
                     RoomPlayer(name: playerUID, uid: playerUID,
                                isRoomMaster: properties["isRoomMaster"] ?? false)
+
                 }
 
                 listener(players)

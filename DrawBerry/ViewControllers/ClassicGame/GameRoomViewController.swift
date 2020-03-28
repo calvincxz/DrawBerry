@@ -11,10 +11,9 @@ import UIKit
 class GameRoomViewController: UIViewController, GameRoomDelegate {
     var room: GameRoom!
 
-    // @IBOutlet private weak var playersTableView: UITableView!
     @IBOutlet private weak var playersCollectionView: UICollectionView!
 
-    private let sectionInsets = UIEdgeInsets(top: 30.0, left: 100.0, bottom: 30.0, right: 100.0)
+    private let sectionInsets = UIEdgeInsets(top: 100.0, left: 150.0, bottom: 100.0, right: 150.0)
     private let itemsPerRow: CGFloat = 2
 
     /// Hides the status bar at the top
@@ -85,12 +84,13 @@ extension GameRoomViewController: UICollectionViewDataSource {
         guard indexPath.row < room.players.count else {
             return cell
         }
-        let image = #imageLiteral(resourceName: "powerup-changealpha")
-        let username = room.players[indexPath.row].name
+        let image = #imageLiteral(resourceName: "blue")
 
-        cell.backgroundColor = .yellow
-        cell.setImage(image)
+        // Truncate uid for testing
+        let username = String(room.players[indexPath.row].name.prefix(10))
+
         cell.setUsername(username)
+        cell.setImage(image)
 
         return cell
     }
@@ -100,8 +100,9 @@ extension GameRoomViewController: UICollectionViewDataSource {
             withReuseIdentifier: "playerCell", for: indexPath) as? PlayerCollectionViewCell else {
                 fatalError("Unable to get reusable cell.")
         }
-        cell.backgroundColor = .yellow
-        cell.setUsername("Empty")
+
+        cell.setDefaultImage()
+        cell.setUsername("Empty Slot")
         return cell
     }
 }
@@ -129,5 +130,30 @@ extension GameRoomViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
+    }
+}
+
+/// Handles gestures for `GameRoomViewController`
+extension GameRoomViewController {
+
+    /// Loads the user profile when single tap is detected on a specific cell.
+    @IBAction private func handleSingleTap(_ sender: UITapGestureRecognizer) {
+        let location = sender.location(in: playersCollectionView)
+        guard let indexPath = playersCollectionView.indexPathForItem(at: location) else {
+            return
+        }
+
+        // Disable gestures on empty slots
+        guard indexPath.row < room.players.count else {
+            return
+        }
+        openUserProfile(at: indexPath.row)
+    }
+
+    // TODO:
+    private func openUserProfile(at index: Int) {
+        let alert = UIAlertController(title: "Profile", message: "Opened user profile", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
     }
 }
