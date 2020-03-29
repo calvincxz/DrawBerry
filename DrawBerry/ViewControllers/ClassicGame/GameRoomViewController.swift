@@ -13,7 +13,7 @@ class GameRoomViewController: UIViewController, GameRoomDelegate {
 
     @IBOutlet private weak var playersCollectionView: UICollectionView!
 
-    private let sectionInsets = UIEdgeInsets(top: 100.0, left: 150.0, bottom: 100.0, right: 150.0)
+    private let sectionInsets = UIEdgeInsets(top: 50.0, left: 160.0, bottom: 50.0, right: 160.0)
     private let itemsPerRow: CGFloat = 2
 
     /// Hides the status bar at the top
@@ -84,13 +84,15 @@ extension GameRoomViewController: UICollectionViewDataSource {
         guard indexPath.row < room.players.count else {
             return cell
         }
-        let image = #imageLiteral(resourceName: "blue")
+
+        let player = room.players[indexPath.row]
 
         // Truncate uid for testing
-        let username = String(room.players[indexPath.row].name.prefix(10))
+        let username = String(player.name.prefix(10))
+
+        UserProfileNetworkAdapter.downloadProfileImage(delegate: cell, playerUID: player.uid)
 
         cell.setUsername(username)
-        cell.setImage(image)
 
         return cell
     }
@@ -100,7 +102,7 @@ extension GameRoomViewController: UICollectionViewDataSource {
             withReuseIdentifier: "playerCell", for: indexPath) as? PlayerCollectionViewCell else {
                 fatalError("Unable to get reusable cell.")
         }
-
+        cell.setCircularShape()
         cell.setDefaultImage()
         cell.setUsername("Empty Slot")
         return cell

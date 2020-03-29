@@ -11,15 +11,11 @@ import UIKit
 class PlayerCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet private weak var usernameLabel: UILabel!
-    @IBOutlet private weak var profilePicture: UIImageView!
+    @IBOutlet private weak var profileImageView: UIImageView!
 
-    func setImage(_ image: UIImage) {
-        let size = frame.size
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let resizedImage = renderer.image { _ in
-            image.draw(in: CGRect(origin: .zero, size: size))
-        }
-        profilePicture.image = resizedImage
+    func setCircularShape() {
+        profileImageView.layer.cornerRadius = 0.5 * profileImageView.bounds.height
+        profileImageView.clipsToBounds = true
     }
 
     func setDefaultImage() {
@@ -29,10 +25,28 @@ class PlayerCollectionViewCell: UICollectionViewCell {
         let image = renderer.image { _ in
             testImage.draw(in: CGRect(origin: .zero, size: size))
         }
-        profilePicture.image = image
+        profileImageView.image = image
     }
 
     func setUsername(_ text: String) {
         usernameLabel.text = text
     }
+}
+
+extension PlayerCollectionViewCell: UserProfileNetworkDelegate {
+
+    func loadProfileImage(image: UIImage?) {
+        guard let image = image else {
+            setDefaultImage()
+            return
+        }
+
+        let size = frame.size
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let resizedImage = renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: size))
+        }
+        profileImageView.image = resizedImage
+    }
+
 }

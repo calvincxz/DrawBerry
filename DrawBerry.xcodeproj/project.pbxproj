@@ -80,6 +80,8 @@
 		3E2837DC2425BBB7001BAA2F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2837DB2425BBB7001BAA2F /* Constants.swift */; };
 		3E2837DE2425C51E001BAA2F /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2837DD2425C51E001BAA2F /* Authentication.swift */; };
 		3E2BDC86241A59C0001D8E8A /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDC85241A59C0001D8E8A /* Message.swift */; };
+		3E64DA6B2430D89E00C1473A /* UserProfileNetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E64DA6A2430D89E00C1473A /* UserProfileNetworkAdapter.swift */; };
+		3E64DA6D2430E5C100C1473A /* UserProfileNetworkDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E64DA6C2430E5C100C1473A /* UserProfileNetworkDelegate.swift */; };
 		3EA22E202425F6B50065C426 /* AuthenticationUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA22E1F2425F6B50065C426 /* AuthenticationUpdateDelegate.swift */; };
 		3EA22E222425FF210065C426 /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA22E212425FF210065C426 /* AuthenticationTests.swift */; };
 		3EF004F6241906A300136234 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF004F5241906A300136234 /* LoginViewController.swift */; };
@@ -188,6 +190,8 @@
 		3E2837DB2425BBB7001BAA2F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3E2837DD2425C51E001BAA2F /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		3E2BDC85241A59C0001D8E8A /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		3E64DA6A2430D89E00C1473A /* UserProfileNetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileNetworkAdapter.swift; sourceTree = "<group>"; };
+		3E64DA6C2430E5C100C1473A /* UserProfileNetworkDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileNetworkDelegate.swift; sourceTree = "<group>"; };
 		3EA22E1F2425F6B50065C426 /* AuthenticationUpdateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationUpdateDelegate.swift; sourceTree = "<group>"; };
 		3EA22E212425FF210065C426 /* AuthenticationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTests.swift; sourceTree = "<group>"; };
 		3EF004F5241906A300136234 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -322,6 +326,8 @@
 				1A432BDC241FC5DF0097A14F /* NetworkHelper.swift */,
 				1A432BDE241FC6AC0097A14F /* RoomNetworkAdapter.swift */,
 				1A4C5F242422619500937244 /* ClassicGameNetworkAdapter.swift */,
+				3E64DA6A2430D89E00C1473A /* UserProfileNetworkAdapter.swift */,
+				3E64DA6C2430E5C100C1473A /* UserProfileNetworkDelegate.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -807,6 +813,7 @@
 				1A3ACB8624227948007FA27C /* VotingViewController.swift in Sources */,
 				1A432BD4241FB2E10097A14F /* RoomPlayer.swift in Sources */,
 				379EE01C24230283005257E1 /* PaletteObserver.swift in Sources */,
+				3E64DA6B2430D89E00C1473A /* UserProfileNetworkAdapter.swift in Sources */,
 				3E2837DE2425C51E001BAA2F /* Authentication.swift in Sources */,
 				3E27F283242F061800436EBF /* PlayerCollectionViewCell.swift in Sources */,
 				1AD5ADD42421F276003B23C9 /* GameRoomDelegate.swift in Sources */,
@@ -846,6 +853,7 @@
 				37CE06542418809D0085BE4A /* Canvas.swift in Sources */,
 				FC488988241C7C4D00375140 /* CompetitiveViewController.swift in Sources */,
 				3749D3AD2425F14A00CE798F /* UIImageViewExtension.swift in Sources */,
+				3E64DA6D2430E5C100C1473A /* UserProfileNetworkDelegate.swift in Sources */,
 				1A000ED924222AE4007FDB32 /* ClassicPlayer.swift in Sources */,
 				FCEC3BE82417941600F0DE03 /* SceneDelegate.swift in Sources */,
 				1A432BDA241FBA540097A14F /* EnterRoomViewController.swift in Sources */,

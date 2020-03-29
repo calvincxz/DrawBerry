@@ -403,7 +403,7 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="391" height="344"/>
                                         <connections>
-                                            <outlet property="profilePicture" destination="OCA-eF-n6C" id="R45-PU-R5k"/>
+                                            <outlet property="profileImageView" destination="OCA-eF-n6C" id="4to-sN-HIS"/>
                                             <outlet property="usernameLabel" destination="YAn-Dq-aTO" id="25J-3w-3jR"/>
                                         </connections>
                                     </collectionViewCell>
@@ -508,6 +508,40 @@
                                     <constraint firstAttribute="width" secondItem="ykF-Dm-QEL" secondAttribute="height" multiplier="1:1" id="h72-Oi-au8"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l2H-LU-8ew">
+                                <rect key="frame" x="50" y="80" width="179" height="239"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ve2-r0-Z6X">
+                                        <rect key="frame" x="0.0" y="50" width="179" height="179"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Ve2-r0-Z6X" secondAttribute="height" multiplier="1:1" id="blg-SN-R5r"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BqC-Jp-r8g">
+                                        <rect key="frame" x="0.0" y="0.0" width="179" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="cVc-W7-Dva"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="Ve2-r0-Z6X" firstAttribute="top" secondItem="BqC-Jp-r8g" secondAttribute="bottom" constant="10" id="0T6-MC-Mwp"/>
+                                    <constraint firstItem="BqC-Jp-r8g" firstAttribute="leading" secondItem="l2H-LU-8ew" secondAttribute="leading" id="1b2-Cd-Iqx"/>
+                                    <constraint firstItem="BqC-Jp-r8g" firstAttribute="top" secondItem="l2H-LU-8ew" secondAttribute="top" id="3HA-nQ-qva"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ve2-r0-Z6X" secondAttribute="bottom" constant="10" id="7Yd-d3-EIT"/>
+                                    <constraint firstAttribute="trailing" secondItem="BqC-Jp-r8g" secondAttribute="trailing" id="DaU-a0-49f"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ve2-r0-Z6X" secondAttribute="trailing" id="JXB-kC-aOK"/>
+                                    <constraint firstItem="Ve2-r0-Z6X" firstAttribute="leading" secondItem="l2H-LU-8ew" secondAttribute="leading" id="TOe-od-NQG"/>
+                                    <constraint firstItem="Ve2-r0-Z6X" firstAttribute="top" secondItem="l2H-LU-8ew" secondAttribute="top" constant="50" id="pTc-fK-6kV"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="WBp-xh-Rhn" appends="YES" id="dx6-OI-CNX"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -519,6 +553,9 @@
                             <constraint firstItem="9X0-Aq-ddT" firstAttribute="top" secondItem="t22-nm-sNV" secondAttribute="bottom" constant="50" id="IiQ-QL-Kp1"/>
                             <constraint firstItem="9X0-Aq-ddT" firstAttribute="leading" secondItem="h2j-cl-c5l" secondAttribute="leading" constant="300" id="JX7-4g-4rW"/>
                             <constraint firstItem="h2j-cl-c5l" firstAttribute="trailing" secondItem="N0X-Aq-3wY" secondAttribute="trailing" constant="47" id="JYz-wf-vsh"/>
+                            <constraint firstItem="l2H-LU-8ew" firstAttribute="top" secondItem="h2j-cl-c5l" secondAttribute="top" constant="80" id="L56-rr-WFV"/>
+                            <constraint firstItem="h2j-cl-c5l" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="l2H-LU-8ew" secondAttribute="bottom" constant="700" id="M8e-Wm-M06"/>
+                            <constraint firstItem="l2H-LU-8ew" firstAttribute="leading" secondItem="h2j-cl-c5l" secondAttribute="leading" constant="50" id="MoT-mg-S9N"/>
                             <constraint firstItem="ykF-Dm-QEL" firstAttribute="centerX" secondItem="t22-nm-sNV" secondAttribute="centerX" id="Q1s-nb-k4n"/>
                             <constraint firstItem="ykF-Dm-QEL" firstAttribute="centerX" secondItem="2yE-JX-vlv" secondAttribute="centerX" id="QT2-xG-VNu"/>
                             <constraint firstItem="N0X-Aq-3wY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="h2j-cl-c5l" secondAttribute="leading" constant="500" id="Qg5-Uf-RC0"/>
@@ -526,6 +563,7 @@
                             <constraint firstItem="t22-nm-sNV" firstAttribute="width" secondItem="ykF-Dm-QEL" secondAttribute="width" id="TwN-NB-pcr"/>
                             <constraint firstItem="QE9-IN-hAr" firstAttribute="bottom" secondItem="h2j-cl-c5l" secondAttribute="bottom" id="krs-F8-Ycr"/>
                             <constraint firstItem="t22-nm-sNV" firstAttribute="centerX" secondItem="9X0-Aq-ddT" secondAttribute="centerX" id="o5D-St-9HR"/>
+                            <constraint firstItem="ykF-Dm-QEL" firstAttribute="leading" secondItem="l2H-LU-8ew" secondAttribute="trailing" constant="50" id="tUW-Ig-7E2"/>
                             <constraint firstItem="N0X-Aq-3wY" firstAttribute="top" secondItem="h2j-cl-c5l" secondAttribute="top" constant="36" id="tbB-hr-z4S"/>
                             <constraint firstItem="t22-nm-sNV" firstAttribute="leading" secondItem="h2j-cl-c5l" secondAttribute="leading" constant="279" id="tw1-wy-kUG"/>
                             <constraint firstItem="QE9-IN-hAr" firstAttribute="top" secondItem="h2j-cl-c5l" secondAttribute="top" id="zuD-Ee-UsS"/>
@@ -535,11 +573,17 @@
                     <navigationItem key="navigationItem" id="feA-Kn-bit"/>
                     <connections>
                         <outlet property="background" destination="QE9-IN-hAr" id="HRy-5A-9NG"/>
+                        <outlet property="profileImageView" destination="Ve2-r0-Z6X" id="vNq-lH-8mr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mXX-1H-sKE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="WBp-xh-Rhn">
+                    <connections>
+                        <action selector="handleProfilePictureTapped:" destination="TxN-r9-amb" id="mE8-EP-Og2"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="826.66666666666663" y="495.55555555555554"/>
+            <point key="canvasLocation" x="826.61870503597129" y="495.47738693467335"/>
         </scene>
         <!--Classic View Controller-->
         <scene sceneID="win-Bf-CTU">
