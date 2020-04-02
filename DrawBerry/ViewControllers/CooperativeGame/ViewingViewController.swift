@@ -20,8 +20,9 @@ class ViewingViewController: CooperativeGameViewController, CooperativeGameViewi
     override func viewDidLoad() {
         super.viewDidLoad()
         addCanvasToView()
-        populateDrawings()
+        updateDrawings()
         cooperativeGame.downloadSubsequentDrawings()
+        observeEndGame()
         overrideUserInterfaceStyle = .light
     }
 
@@ -31,7 +32,12 @@ class ViewingViewController: CooperativeGameViewController, CooperativeGameViewi
         populateDrawings()
     }
 
+    private func observeEndGame() {
+        cooperativeGame.observeGameStatus()
+    }
+
     private func populateDrawings() {
+        cooperativeGame.downloadPreviousDrawings()
         cooperativeGame.allDrawings.forEach {
             let imageView = createImageView(of: $0, in: self.view.frame)
             drawings.append(imageView)

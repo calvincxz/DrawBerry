@@ -15,10 +15,12 @@ class DrawingViewController: CooperativeGameViewController {
     var drawingSpaceHeight: CGFloat {
         canvasHeight / CGFloat(cooperativeGame.players.count)
     }
+    var shouldTimerStop = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        setCurrentPlayer()
         addCanvasToView()
         addPreviousDrawings()
         createMask()
@@ -30,6 +32,10 @@ class DrawingViewController: CooperativeGameViewController {
             viewingVC.cooperativeGame = cooperativeGame
             viewingVC.cooperativeGame.viewingDelegate = viewingVC
         }
+    }
+
+    private func setCurrentPlayer() {
+        cooperativeGame.setCurrentPlayer()
     }
 
     private func addCanvasToView() {
@@ -59,15 +65,18 @@ class DrawingViewController: CooperativeGameViewController {
     }
 
     @objc private func doneOnTap(sender: UIButton) {
+        shouldTimerStop = true
         finishRound()
     }
 
     private func finishRound() {
         cooperativeGame.addUsersDrawing(image: canvas.drawingImage)
+        cooperativeGame.setNextPlayer()
         performSegue(withIdentifier: "segueToViewing", sender: self)
     }
 
     private func addPreviousDrawings() {
+        cooperativeGame.downloadPreviousDrawings()
         cooperativeGame.allDrawings.forEach {
             let imageView = UIImageView(frame: canvas.frame)
             imageView.image = $0
@@ -104,5 +113,49 @@ class DrawingViewController: CooperativeGameViewController {
         view.addSubview(firstMaskOpaque)
         view.addSubview(firstMask)
         view.addSubview(secondMask)
+    }
+
+    override func handleDraw(recognizer: UIGestureRecognizer, canvas: Canvas) {
+        if !canvas.isAbleToDraw {
+            recognizer.state = .ended
+            recognizer.isEnabled = false
+            return
+        }
+        let position = recognizer.location(in: recognizer.view)
+        if !canvas.isWithinDrawableLimit(position: position) {
+            canvas.isAbleToDraw = false
+            canvas.isAbleToDraw = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.syncStroke(to: canvas)
+            }
+            return
+        }
+        if recognizer.state == .ended {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.syncStroke(to: canvas)
+            }
+        }
+    }
+
+    private func syncStroke(to canvas: Canvas) {
+        let prevSize = canvas.history.last?.dataRepresentation().count ?? PKDrawing().dataRepresentation().count
+        if prevSize < canvas.drawing.dataRepresentation().count {
+            // A stroke was added
+            cooperativeGame.addUsersDrawing(image: canvas.drawingImage)
+            updateHistory(on: canvas, with: canvas.drawing)
+            canvas.numberOfStrokes += 1
+            return
+        }
+        if prevSize > canvas.drawing.dataRepresentation().count {
+            // A stroke was deleted
+            cooperativeGame.addUsersDrawing(image: canvas.drawingImage)
+            updateHistory(on: canvas, with: canvas.drawing)
+            canvas.numberOfStrokes -= 1
+            return
+        }
+    }
+
+    private func updateHistory(on canvas: Canvas, with drawing: PKDrawing) {
+        canvas.history.append(drawing)
     }
 }

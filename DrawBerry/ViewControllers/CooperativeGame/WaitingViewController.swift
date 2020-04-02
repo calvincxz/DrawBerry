@@ -27,7 +27,7 @@ class WaitingViewController: UIViewController, CooperativeGameDelegate {
             }
             return
         }
-        cooperativeGame.waitForPreviousPlayersToFinish()
+        cooperativeGame.waitForTurn()
     }
 
     private func addCanvasToView() {

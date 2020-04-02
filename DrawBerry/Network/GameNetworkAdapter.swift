@@ -84,4 +84,66 @@ class GameNetworkAdapter {
             dbPathRef.removeAllObservers() // remove observer after downloading image
         })
     }
+
+    func setCurrentPlayer(from previousUID: String, to playerUID: String, in round: Int) {
+        let previousPlayerRef = db.child("activeRooms")
+            .child(roomCode.type.rawValue).child(roomCode.value).child("players")
+            .child(previousUID).child("rounds").child(String(round)).child("hasUploadedImage")
+        previousPlayerRef.removeAllObservers()
+
+        let currentPlayerRef = db.child("activeRooms")
+            .child(roomCode.type.rawValue).child(roomCode.value).child("currentPlayer")
+        currentPlayerRef.setValue(playerUID)
+    }
+
+    func endGame() {
+        let currentStatusRef = db.child("activeRooms")
+            .child(roomCode.type.rawValue).child(roomCode.value).child("isEnded")
+        currentStatusRef.setValue(true)
+    }
+
+    func observeTurnArrive(for playerUID: String, completionHandler: @escaping () -> Void) {
+        let currentPlayerRef = db.child("activeRooms")
+            .child(roomCode.type.rawValue).child(roomCode.value).child("currentPlayer")
+
+        currentPlayerRef.observe(.value, with: { snapshot in
+            guard let currentUID = snapshot.value as? String else {
+                return
+            }
+            if currentUID != playerUID {
+                return
+            }
+            completionHandler()
+            currentPlayerRef.removeAllObservers() // remove observer after turn is reached
+        })
+    }
+
+    func observeGameStatus(completionHandler: @escaping () -> Void) {
+        let currentStatusRef = db.child("activeRooms")
+            .child(roomCode.type.rawValue).child(roomCode.value).child("isEnded")
+
+        currentStatusRef.observe(.value, with: { snapshot in
+            guard snapshot.value as? Bool ?? false else { // game not ended yet
+                return
+            }
+            completionHandler()
+            currentStatusRef.removeAllObservers()
+        })
+    }
+
+    func downloadCurrentPlayerDrawing(forRound round: Int, completionHandler: @escaping (UIImage) -> Void) {
+        let currentPlayerRef = db.child("activeRooms")
+            .child(roomCode.type.rawValue).child(roomCode.value).child("currentPlayer")
+
+        currentPlayerRef.observe(.value, with: { snapshot in
+            guard let currentUID = snapshot.value as? String else { // image not uploaded yet
+                return
+            }
+
+            self.downloadPlayerDrawing(playerUID: currentUID, forRound: round,
+                                       completionHandler: completionHandler)
+
+            currentPlayerRef.removeAllObservers() // remove observer after downloading image
+        })
+    }
 }

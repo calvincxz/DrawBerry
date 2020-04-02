@@ -26,6 +26,10 @@ class CooperativeGame {
     var isFirstPlayer: Bool {
         userIndex == 0
     }
+    var isLastPlayer: Bool {
+        userIndex == players.count - 1
+    }
+    private var shouldTimerStop = false
 
     convenience init(from room: GameRoom) {
         self.init(from: room, networkAdapter: GameNetworkAdapter(roomCode: room.roomCode))
@@ -44,36 +48,77 @@ class CooperativeGame {
         self.currentRound = 1
     }
 
-    func moveToNextRound() {
-        currentRound += 1
-        // TODO: update db
-    }
-
     func addUsersDrawing(image: UIImage) {
         user.addDrawing(image: image)
         networkAdapter.uploadUserDrawing(image: image, forRound: currentRound)
     }
 
-    func waitForPreviousPlayersToFinish() {
-        if isFirstPlayer {
-            return
-        }
+    func downloadMyDrawing() {
+        downloadDrawing(of: user)
+    }
+
+    func downloadPreviousDrawings() {
+        allDrawings = []
         let previousPlayers = players.filter { $0.index < userIndex }
         previousPlayers.forEach { downloadDrawing(of: $0) }
     }
 
+    func setCurrentPlayer() {
+        networkAdapter.setCurrentPlayer(from: user.uid, to: user.uid, in: currentRound)
+    }
+
+    func setNextPlayer() {
+        if userIndex == players.count - 1 {
+            // User is last player
+            networkAdapter.endGame()
+            viewingDelegate?.navigateToEndPage()
+            return
+        }
+        let nextPlayer = players[userIndex + 1]
+        networkAdapter.setCurrentPlayer(from: user.uid, to: nextPlayer.uid, in: currentRound)
+    }
+
+    func waitForTurn() {
+        networkAdapter.observeTurnArrive(for: user.uid, completionHandler: {
+            self.delegate?.changeMessageToGetReady()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.delegate?.navigateToDrawingPage()
+            }
+        })
+    }
+
     func downloadSubsequentDrawings() {
-        let futurePlayers = players.filter { $0.index >= userIndex }
-        futurePlayers.forEach { downloadDrawing(of: $0) }
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            if self.shouldTimerStop {
+                timer.invalidate()
+            }
+            let numberOfDrawings = self.allDrawings.count
+            self.networkAdapter.downloadCurrentPlayerDrawing(
+                forRound: self.currentRound, completionHandler: { [weak self] image in
+                    if numberOfDrawings == 0 {
+                        self?.allDrawings.append(image)
+                    } else {
+                        self?.allDrawings[numberOfDrawings - 1] = image
+                    }
+                    self?.viewingDelegate?.updateDrawings()
+                }
+            )
+        }
+    }
+
+    func observeGameStatus() {
+        networkAdapter.observeGameStatus(completionHandler: {
+            print("game ended")
+            self.shouldTimerStop = true
+            self.viewingDelegate?.navigateToEndPage()
+        })
     }
 
     func downloadDrawing(of player: CooperativePlayer) {
+        print("downloading for \(player.uid)")
         networkAdapter.waitAndDownloadPlayerDrawing(
             playerUID: player.uid, forRound: currentRound, completionHandler: { [weak self] image in
                 self?.allDrawings.append(image)
-                self?.navigateIfUserIsNextPlayer(currentPlayer: player)
-                self?.viewingDelegate?.updateDrawings()
-                self?.navigateIfPlayerIsLast(currentPlayer: player)
             }
         )
     }

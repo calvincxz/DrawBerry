@@ -50,7 +50,6 @@ class UserProfileNetworkAdapter {
                 print("Error \(error) occured while uploading to CloudStorage")
                 return
             }
-
         })
     }
 
