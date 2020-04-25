@@ -143,6 +143,30 @@ class FirebaseGameNetworkAdapter: GameNetwork, FirebaseNetworkAdapter {
         })
     }
 
+    // removes game from db upon game end
+    // also removes uploaded drawings from cloud storage
+    func endGame(isRoomMaster: Bool, numRounds: Int) {
+        guard let userID = getLoggedInUserID() else {
+            return
+        }
+
+        // room master deletes active room from db
+        if isRoomMaster {
+            dbDefaultRoomPath.removeValue()
+        }
+
+        let cloudPathRef = cloudDefaultRoomPath
+            .child("players")
+            .child(userID)
+
+        // delete drawing for each round from storage
+        for round in 0..<numRounds {
+            cloudPathRef.child("\(round).png").delete()
+        }
+    }
+}
+
+extension FirebaseGameNetworkAdapter: ClassicGameNetwork {
     // update who user voted for, and the voter and votees points
     func userVoteFor(playerUID: String, forRound round: Int,
                      updatedPlayerPoints: Int, updatedUserPoints: Int? = nil) {
@@ -194,36 +218,46 @@ class FirebaseGameNetworkAdapter: GameNetwork, FirebaseNetworkAdapter {
             dbPathRef.removeAllObservers()
         })
     }
-
-    // removes game from db upon game end
-    // also removes uploaded drawings from cloud storage
-    func endGame(isRoomMaster: Bool, numRounds: Int) {
-        guard let userID = getLoggedInUserID() else {
-            return
-        }
-
-        // room master deletes active room from db
-        if isRoomMaster {
-            dbDefaultRoomPath.removeValue()
-        }
-
-        let cloudPathRef = cloudDefaultRoomPath
-            .child("players")
-            .child(userID)
-
-        // delete drawing for each round from storage
-        for round in 0..<numRounds {
-            cloudPathRef.child("\(round).png").delete()
-        }
+    
+    // set the topic for the given round
+    func setTopic(topic: String, forRound round: Int) {
+        db.child("activeRooms")
+            .child(roomCode.type.rawValue)
+            .child(roomCode.value)
+            .child("topics")
+            .child("round\(round)")
+            .setValue(topic)
     }
 
+    // observe the topic set for the given round
+    // upon the setting of topic, completionHandler is called
+    func observeTopic(forRound round: Int, completionHandler: @escaping (String) -> Void) {
+        let dbPathRef = db.child("activeRooms")
+            .child(roomCode.type.rawValue)
+            .child(roomCode.value)
+            .child("topics")
+            .child("round\(round)")
+
+        dbPathRef.observe(.value, with: { snapshot in
+            guard let topic = snapshot.value as? String else {
+                return
+            }
+
+            completionHandler(topic)
+
+            dbPathRef.removeAllObservers()
+        })
+    }
+}
+
+extension FirebaseGameNetworkAdapter: TeamBattleGameNetwork {
     func observeValue(key: String, playerUID: String, completionHandler: @escaping (String) -> Void) {
 
         let booleanKey = "has\(key)"
         let dbPathRef = dbDefaultRoomPath
-                        .child("players")
-                        .child(playerUID)
-                        .child(booleanKey)
+            .child("players")
+            .child(playerUID)
+            .child(booleanKey)
 
         dbPathRef.observe(.value, with: { snapshot in
             guard snapshot.value as? Bool ?? false else { // result not ready
@@ -259,33 +293,4 @@ class FirebaseGameNetworkAdapter: GameNetwork, FirebaseNetworkAdapter {
         dbPathRef.child(booleanKey).setValue(true)
     }
 
-    // set the topic for the given round
-    func setTopic(topic: String, forRound round: Int) {
-        db.child("activeRooms")
-            .child(roomCode.type.rawValue)
-            .child(roomCode.value)
-            .child("topics")
-            .child("round\(round)")
-            .setValue(topic)
-    }
-
-    // observe the topic set for the given round
-    // upon the setting of topic, completionHandler is called
-    func observeTopic(forRound round: Int, completionHandler: @escaping (String) -> Void) {
-        let dbPathRef = db.child("activeRooms")
-            .child(roomCode.type.rawValue)
-            .child(roomCode.value)
-            .child("topics")
-            .child("round\(round)")
-
-        dbPathRef.observe(.value, with: { snapshot in
-            guard let topic = snapshot.value as? String else {
-                return
-            }
-
-            completionHandler(topic)
-
-            dbPathRef.removeAllObservers()
-        })
-    }
 }

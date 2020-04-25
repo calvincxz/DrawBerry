@@ -16,22 +16,5 @@ protocol GameNetwork: NetworkInterface {
     func observeAndDownloadPlayerDrawing(playerUID: String, forRound round: Int,
                                          completionHandler: @escaping (UIImage) -> Void)
 
-    func userVoteFor(playerUID: String, forRound round: Int,
-                     updatedPlayerPoints: Int, updatedUserPoints: Int?)
-
-    func observePlayerVote(playerUID: String, forRound round: Int,
-                           completionHandler: @escaping (String) -> Void)
-
-    func observeValue(key: String, playerUID: String,
-                            completionHandler: @escaping (String) -> Void)
-
-    func uploadKeyValuePair(key: String, playerUID: String, value: String)
-
     func endGame(isRoomMaster: Bool, numRounds: Int)
-
-    func getLoggedInUserID() -> String?
-
-    func setTopic(topic: String, forRound round: Int)
-
-    func observeTopic(forRound round: Int, completionHandler: @escaping (String) -> Void)
 }
