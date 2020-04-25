@@ -609,8 +609,7 @@
 				1A4595B82445B57F009D447D /* RoomEnteringNetwork.swift */,
 				1A4595BA2445BC07009D447D /* RoomNetwork.swift */,
 				1A4595BC2445C25D009D447D /* GameNetwork.swift */,
-				37D58E9E24546CA300C8777A /* ClassicGameNetwork.swift */,
-				37D58EA024546D1500C8777A /* TeamBattleGameNetwork.swift */,
+				37D58EA224546EA200C8777A /* GameNetworks */,
 				1A4595CE2445FEBB009D447D /* UserProfileNetwork.swift */,
 				3E64DA722430F5AF00C1473A /* UserProfileNetworkDelegate.swift */,
 			);
@@ -767,6 +766,15 @@
 				3792F44F243DA8D800FDEBDC /* MultiplayerPlayer.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		37D58EA224546EA200C8777A /* GameNetworks */ = {
+			isa = PBXGroup;
+			children = (
+				37D58E9E24546CA300C8777A /* ClassicGameNetwork.swift */,
+				37D58EA024546D1500C8777A /* TeamBattleGameNetwork.swift */,
+			);
+			path = GameNetworks;
 			sourceTree = "<group>";
 		};
 		3E2BDC87241A6224001D8E8A /* UserAuthentication */ = {
